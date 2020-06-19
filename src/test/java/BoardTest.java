@@ -69,9 +69,10 @@ public class BoardTest {
 
         System.out.println(String.format("opponent:%s", Arrays.toString(o)));
 
-        //board.setDisc(Board.WHITE, 3, 0);
+        Assert.assertNull(null, o);
+        board.setDisc(Board.WHITE, 3, 0);
 
-        //Board.displayBoard(board.board);
+        Board.displayBoard(board.board);
 
     }
 }
