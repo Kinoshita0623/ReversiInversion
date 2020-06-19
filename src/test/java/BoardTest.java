@@ -1,7 +1,7 @@
+import jp.panta.reversi.Board;
 import org.junit.Assert;
 import org.junit.Test;
 
-import javax.swing.*;
 import java.util.Arrays;
 
 public class BoardTest {
@@ -11,7 +11,7 @@ public class BoardTest {
 
         Board board = new Board();
         board.init();
-        Board.displayBoard(board.board);
+        Board.displayBoard(board);
         int[] opposite = board.oppositeDiscY(Board.WHITE, 4, 2, false);
         System.out.println(Arrays.toString(opposite));
         Assert.assertNotEquals(opposite, null);
@@ -24,43 +24,43 @@ public class BoardTest {
         board.setDisc(Board.WHITE, 4, 2, new int[]{4, 4});
         //board.board[2][4] = Board.WHITE;
         //System.out.println(result);
-        Board.displayBoard(board.board);
+        Board.displayBoard(board);
 
         board.setDisc(Board.BLACK, 3, 2, new int[]{3, 4});
-        Board.displayBoard(board.board);
+        Board.displayBoard(board);
 
         // 斜めの挙動がおかしい
         board.setDisc(Board.WHITE, 2, 1, new int[]{ 4, 3 });
-        Board.displayBoard(board.board);
+        Board.displayBoard(board);
     }
 
     @Test
     public void normalSetDiscTest(){
         Board board = new Board();
         board.init();
-        Board.displayBoard(board.board);
+        Board.displayBoard(board);
         System.out.println();
 
 
         board.setDisc(Board.WHITE, 4, 2);
-        Board.displayBoard(board.board);
+        Board.displayBoard(board);
         System.out.println();
 
         board.setDisc(Board.BLACK, 3, 2);
-        Board.displayBoard(board.board);
+        Board.displayBoard(board);
         System.out.println();
 
 
         board.setDisc(Board.WHITE, 2, 1);
-        Board.displayBoard(board.board);
+        Board.displayBoard(board);
         System.out.println();
 
         board.setDisc(Board.BLACK, 3, 1);
-        Board.displayBoard(board.board);
+        Board.displayBoard(board);
         System.out.println();
 
         board.setDisc(Board.WHITE, 4, 1);
-        Board.displayBoard(board.board);
+        Board.displayBoard(board);
         System.out.println();
 
         //board.oppositeDiscX(Board.WHITE, 3, 0, true);
@@ -73,7 +73,7 @@ public class BoardTest {
         board.setDisc(Board.WHITE, 3, 0);
         board.setDisc(Board.BLACK, 0, 0);
 
-        Board.displayBoard(board.board);
+        Board.displayBoard(board);
 
         int[][] settable = board.settableDiskPositions(Board.BLACK);
         for(int[] element : settable){

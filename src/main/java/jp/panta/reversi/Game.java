@@ -1,14 +1,16 @@
+package jp.panta.reversi;
+
 import java.util.ArrayList;
 
 public class Game {
 
-    int turn;
+    private int turn;
 
     /**
      * ゲームの記録がここに入る
      */
     final ArrayList<int[]> log = new ArrayList<>();
-    final Board board = new Board();
+    public final Board board = new Board();
 
     private boolean isFinished = false;
 
@@ -39,4 +41,7 @@ public class Game {
 
     }
 
+    public int getTurn() {
+        return turn;
+    }
 }

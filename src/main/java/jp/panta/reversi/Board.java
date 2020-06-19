@@ -1,16 +1,17 @@
+package jp.panta.reversi;
 
 import java.util.Arrays;
 
 public class Board {
 
-    static final int WHITE = 1;
-    static final int BLACK = -1;
+    public static final int WHITE = 1;
+    public static final int BLACK = -1;
 
     /**
      * 縦軸に
      * 横横横横横横横横配置をする
      */
-    int[][] board;
+    private final int[][] board;
 
     public Board(int size) throws IllegalArgumentException{
         if((size & 1) == 1){
@@ -206,7 +207,8 @@ public class Board {
     }
 
 
-    public static void displayBoard(int[][] board){
+    public static void displayBoard(Board b){
+        int[][] board = b.board;
         for(int i = 0; i < board.length; i ++){
             if(i == 0){
                 System.out.println("    0  1  2  3  4  5  6  7");
