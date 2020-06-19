@@ -42,8 +42,12 @@ public class Game {
     }
 
     public boolean isProgressGame(){
-        return board.discCount(1) + board.discCount(-1) < Math.pow(board.board.length, 2)
-                && winner == 0;
+        int blackCount = board.discCount(Board.BLACK);
+        int whiteCount = board.discCount(Board.WHITE);
+        return blackCount + whiteCount < Math.pow(board.board.length, 2)
+                && winner == 0
+                && blackCount > 0
+                && whiteCount > 0;
     }
 
     public void surrender(int player){
