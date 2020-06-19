@@ -1,7 +1,12 @@
 package jp.panta.reversi;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 
+/**
+ * ゲームの進行を取り仕切るクラス
+ */
 public class Game {
 
     private int turn;
@@ -28,13 +33,12 @@ public class Game {
             turn = player == Board.BLACK ? Board.WHITE : Board.BLACK;
             log.add( new int[]{ player, x, y} );
             return true;
-        }else{
-            return false;
         }
+        return false;
     }
 
-    public int[][] settablePositions(int player){
-        return board.settableDiskPositions(player);
+    public @NotNull int[][] settablePositions(){
+        return board.settableDiskPositions(turn);
     }
 
     public void surrender(int player){

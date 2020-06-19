@@ -1,6 +1,10 @@
 package jp.panta.reversi;
 
-import java.util.Arrays;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Board {
 
@@ -79,7 +83,7 @@ public class Board {
         return isSuccess;
     }
 
-    public void setDisc(final int player, final int xDisc, final int yDisc, final int[] opposite){
+    public void setDisc(final int player, final int xDisc, final int yDisc, @NotNull final int[] opposite){
         if( opposite == null )
             return;
 
@@ -122,7 +126,7 @@ public class Board {
      * @param isRightTo 上に向かって走査する場合は true
      * @return 有効なコマが対照的に存在していればその座標を{ x, y }で返し、無効であれば nullを返す
      */
-    public int[] oppositeDiscX(int player, int xDisc, int yDisc,  boolean isRightTo){
+    public @Nullable int[] oppositeDiscX(int player, int xDisc, int yDisc,  boolean isRightTo){
         int[] xArray = board[yDisc];
         int increment = isRightTo ? 1 : -1;
         int opposite = player == WHITE ? BLACK : WHITE;
@@ -148,7 +152,7 @@ public class Board {
      * @param isUpTo 右側に向かって走査するのであればtrue、左側に向かって操作するのであればfalse
      * @return 有効なコマが対照的に存在していればその座標を{ x, y }で返し、無効であれば nullを返す
      */
-    public int[] oppositeDiscY(final int player, final int xDisc, final int yDisc, final boolean isUpTo){
+    public @Nullable int[] oppositeDiscY(final int player, final int xDisc, final int yDisc, final boolean isUpTo){
         final int increment = isUpTo ? 1 : -1;
         int opposite = player == WHITE ? BLACK : WHITE;
 
@@ -175,7 +179,7 @@ public class Board {
      * @param isRightTo 斜め右に走査しようとしている場合はtrue
      * @return 有効なコマが対照的に存在していれば、その座標を{ x, y }で返し、無効であればnullを返す
      */
-    public int[] oppositeDiagonal(final int player, final int xDisc, final int yDisc, final boolean isUpTo, final boolean isRightTo){
+    public @Nullable int[] oppositeDiagonal(final int player, final int xDisc, final int yDisc, final boolean isUpTo, final boolean isRightTo){
         int opposite = player == WHITE ? BLACK : WHITE;
 
         int xIncrement = isRightTo ? 1 : -1;
@@ -232,7 +236,7 @@ public class Board {
 
     }
 
-    public int[][] settableDiskPositions(int player){
+    public @NotNull int[][] settableDiskPositions(int player){
         int[][] array = new int[board.length * board.length][3];
         Arrays.fill(array, null);
 
@@ -281,5 +285,19 @@ public class Board {
         return !isNotFill;
     }
 
+    public @NotNull int[][] getBoard(){
+        return board.clone();
+    }
 
+    public int discCount(int player){
+        int count = 0;
+        for(int[] a : board){
+            for(int box : a){
+                if(box == player){
+                    count ++;
+                }
+            }
+        }
+        return count;
+    }
 }

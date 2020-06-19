@@ -21,7 +21,7 @@ public class Main {
             System.out.print("コマを置く座標を入力してください (x y), 配置可能な場所をみる場合は-1を指定");
             int n = Integer.parseInt(sc.next());
             if(n == -1){
-                for(int[] a : game.settablePositions(game.getTurn())){
+                for(int[] a : game.settablePositions()){
                     if(a == null)
                         break;
                     System.out.println(String.format("x:%d, y:%d", a[0], a[1]));
@@ -31,8 +31,11 @@ public class Main {
             int y = sc.nextInt();
 
 
-            game.setDisc(game.getTurn(), n, y);
-            Board.displayBoard(game.board);
+            if(game.setDisc(game.getTurn(), n, y)){
+                Board.displayBoard(game.board);
+            }else{
+                System.out.println(String.format("x%d, y%dは無効です", n, y));
+            }
         }
     }
 
