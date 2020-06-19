@@ -156,8 +156,23 @@ public class Board {
         final int increment = isUpTo ? 1 : -1;
         int opposite = player == WHITE ? BLACK : WHITE;
 
+        int i = yDisc;
+        if(board[i][xDisc] != 0){
+            return null;
+        }
+        i += increment;
+        while(
+                i < board.length && i >= 0
+                && board[i][xDisc] == opposite
+        ){
+            i += increment;
+        }
+        if( Math.abs(yDisc - i) < 2){
+            return null;
+        }
+        return new int[]{xDisc, i};
         //System.out.println(String.format("xDisc:%d, yDisc:%d, increment:%d", xDisc, yDisc, increment));
-        for( int i = yDisc; i < board.length && i >= 0; i += increment){
+        /*for( int i = yDisc; i < board.length && i >= 0; i += increment){
             if( i == yDisc && board[i][xDisc] != 0){
                 // 既に配置されていた場合は配置することができないのでNULLを返す
                 return null;
@@ -167,7 +182,7 @@ public class Board {
                 return new int[]{ xDisc, i };
             }
         }
-        return null;
+        return null;*/
     }
 
     /**
@@ -187,7 +202,9 @@ public class Board {
         int yIndex = yDisc;
         int xIndex = xDisc;
         //System.out.println(String.format("xDisc:%d, yDisc:%d, xIncrement:%d, yIncrement:%d", xDisc, yDisc, xIncrement, yIncrement));
-
+        if(board[yIndex][xIndex] == player){
+            return null;
+        }
         while(
                 yIndex >= 0
                         && yIndex < board.length

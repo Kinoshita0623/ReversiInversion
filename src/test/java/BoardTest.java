@@ -83,5 +83,8 @@ public class BoardTest {
             System.out.println(String.format("x:%d, y:%d", element[0], element[1]));
         }
 
+        int[] opponent2 = board.oppositeDiagonal(Board.BLACK, 3, 2, true, true);
+        Assert.assertNull(opponent2);
+
     }
 }
