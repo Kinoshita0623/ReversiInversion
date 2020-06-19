@@ -1,28 +1,35 @@
 import java.util.Arrays;
+import java.util.Scanner;
 
 public class Main {
 
     public static void main(String[] args){
-        Board board = new Board();
-        board.init();
-        displayBoard(board.board);
-        board.setDisc(Board.WHITE, 3, 2);
-        System.out.println();
-        displayBoard(board.board);
-        for(int i = 0; i < board.board.length; i ++){
-            for(int j = 0; j < board.board[i].length; j ++){
-                board.setDisc(Board.BLACK, j, i);
+
+        Scanner sc = new Scanner(System.in);
+        Game game = new Game();
+
+        System.out.println("-------オセロゲーム-----------");
+        while(game.board.isFill()){
+            String turn = game.turn == Board.BLACK ? "黒" : "白";
+            System.out.println("---------------------------------------------------------------");
+            System.out.println("次は" + turn);
+            System.out.print("コマを置く座標を入力してください (x y), 配置可能な場所をみる場合は-1を指定");
+            int n = Integer.parseInt(sc.next());
+            if(n == -1){
+                for(int[] a : game.settablePositions(game.turn)){
+                    if(a == null)
+                        break;
+                    System.out.println(String.format("x:%d, y:%d", a[0], a[1]));
+                }
+                continue;
             }
-        }
-        System.out.println();
-        displayBoard(board.board);
+            int y = sc.nextInt();
 
 
-    }
-
-    public static void displayBoard(int[][] board){
-        for(int[] w: board){
-            System.out.println(Arrays.toString(w));
+            game.setDisc(game.turn, n, y);
+            Board.displayBoard(game.board.board);
         }
     }
+
+
 }

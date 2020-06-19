@@ -46,7 +46,7 @@ public class BoardTest {
         Board.displayBoard(board.board);
         System.out.println();
 
-        board.setDisc(Board.WHITE, 3, 2);
+        board.setDisc(Board.BLACK, 3, 2);
         Board.displayBoard(board.board);
         System.out.println();
 
@@ -71,8 +71,17 @@ public class BoardTest {
 
         Assert.assertNull(null, o);
         board.setDisc(Board.WHITE, 3, 0);
+        board.setDisc(Board.BLACK, 0, 0);
 
         Board.displayBoard(board.board);
+
+        int[][] settable = board.settableDiskPositions(Board.BLACK);
+        for(int[] element : settable){
+            if(element == null){
+                break;
+            }
+            System.out.println(String.format("x:%d, y:%d", element[0], element[1]));
+        }
 
     }
 }

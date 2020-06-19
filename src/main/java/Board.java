@@ -124,12 +124,12 @@ public class Board {
     public int[] oppositeDiscX(int player, int xDisc, int yDisc,  boolean isRightTo){
         int[] xArray = board[yDisc];
         int increment = isRightTo ? 1 : -1;
-        // int opposite = player == WHITE ? BLACK : WHITE;
+        int opposite = player == WHITE ? BLACK : WHITE;
         for( int i = xDisc; i < xArray.length && i >= 0;  i += increment){
             if( i == xDisc && xArray[i] == player){
                 // 既に配置されていた場合は配置することができないのでNULLを返す
                 return null;
-            }else if( i == xDisc + increment && xArray[i] == player){
+            }else if( i == xDisc + increment && xArray[i] != opposite){
                 return null;
             }else if( xArray[i] == player ){
                 return new int[]{ i, yDisc };
@@ -149,12 +149,14 @@ public class Board {
      */
     public int[] oppositeDiscY(final int player, final int xDisc, final int yDisc, final boolean isUpTo){
         final int increment = isUpTo ? 1 : -1;
+        int opposite = player == WHITE ? BLACK : WHITE;
+
         //System.out.println(String.format("xDisc:%d, yDisc:%d, increment:%d", xDisc, yDisc, increment));
         for( int i = yDisc; i < board.length && i >= 0; i += increment){
             if( i == yDisc && board[i][xDisc] == player){
                 // 既に配置されていた場合は配置することができないのでNULLを返す
                 return null;
-            }else if( i == yDisc + increment && board[i][xDisc] == player){
+            }else if( i == yDisc + increment && board[i][xDisc] != opposite){
                 return null;
             }else if( board[i][xDisc] == player ){
                 return new int[]{ xDisc, i };
@@ -173,6 +175,7 @@ public class Board {
      * @return 有効なコマが対照的に存在していれば、その座標を{ x, y }で返し、無効であればnullを返す
      */
     public int[] oppositeDiagonal(final int player, final int xDisc, final int yDisc, final boolean isUpTo, final boolean isRightTo){
+        int opposite = player == WHITE ? BLACK : WHITE;
 
         int xIncrement = isRightTo ? 1 : -1;
         int yIncrement = isUpTo ? -1 : 1;
@@ -190,7 +193,7 @@ public class Board {
             if( yIndex == yDisc && yIndex == xDisc && board[yIndex][xIndex] == player && board[yIndex][xIndex] == player){
                 // 既に配置されていた場合は配置することができないのでNULLを返す
                 return null;
-            }else if( yDisc + yIncrement == yIndex&& xDisc + xIncrement == xIndex && board[yIndex][xIndex] == player){
+            }else if( yDisc + yIncrement == yIndex&& xDisc + xIncrement == xIndex && board[yIndex][xIndex] != opposite){
                 return null;
             }else if( board[yIndex][xIndex] == player ){
                 return new int[]{ xIndex, yIndex };
@@ -216,6 +219,55 @@ public class Board {
             }
             System.out.println();
         }
+    }
+
+    public int[][] settableDiskPositions(int player){
+        int[][] array = new int[board.length * board.length][3];
+        Arrays.fill(array, null);
+
+        int counter = 0;
+        for(int i = 0; i < board.length; i++){
+            for(int j = 0; j < board.length; j++){
+                // y軸判定
+                int[] top = oppositeDiscY(player, j, i, true);
+                int[] bottom = oppositeDiscY(player, j, i, false);
+                int[] right = oppositeDiscX(player, j, i, true);
+                int[] left = oppositeDiscX(player, j, i, false);
+                int[] leftTop = oppositeDiagonal(player, j, i, true, false);
+                int[] rightTop = oppositeDiagonal(player, j, i, true, true);
+                int[] leftBottom = oppositeDiagonal(player, j, i, false, false);
+                int[] rightBottom = oppositeDiagonal(player, j, i, false, true);
+
+                boolean isSettable = !(top == null
+                        && bottom == null
+                        && right == null
+                        && left == null
+                        && leftTop == null
+                        && rightTop == null
+                        && leftBottom == null
+                        && rightBottom == null);
+                if(isSettable){
+                    array[counter] = new int[]{ j, i };
+                    counter ++;
+                }
+            }
+        }
+        return array;
+    }
+
+    public boolean isFill(){
+
+        boolean isNotFill = false;
+        for( int[] y : board ){
+            for( int box : y ){
+                isNotFill = box != 0;
+                if(isNotFill){
+                    break;
+                }
+            }
+        }
+
+        return !isNotFill;
     }
 
 
