@@ -126,7 +126,7 @@ public class Board {
         int increment = isRightTo ? 1 : -1;
         int opposite = player == WHITE ? BLACK : WHITE;
         for( int i = xDisc; i < xArray.length && i >= 0;  i += increment){
-            if( i == xDisc && xArray[i] == player){
+            if( i == xDisc && xArray[i] != 0){
                 // 既に配置されていた場合は配置することができないのでNULLを返す
                 return null;
             }else if( i == xDisc + increment && xArray[i] != opposite){
@@ -153,7 +153,7 @@ public class Board {
 
         //System.out.println(String.format("xDisc:%d, yDisc:%d, increment:%d", xDisc, yDisc, increment));
         for( int i = yDisc; i < board.length && i >= 0; i += increment){
-            if( i == yDisc && board[i][xDisc] == player){
+            if( i == yDisc && board[i][xDisc] != 0){
                 // 既に配置されていた場合は配置することができないのでNULLを返す
                 return null;
             }else if( i == yDisc + increment && board[i][xDisc] != opposite){
@@ -190,7 +190,7 @@ public class Board {
                         && xIndex < board[yIndex].length
         ){
             //System.out.println(String.format("x:%d, y:%d", xIndex, yIndex));
-            if( yIndex == yDisc && yIndex == xDisc && board[yIndex][xIndex] == player && board[yIndex][xIndex] == player){
+            if( yIndex == yDisc && yIndex == xDisc && board[yIndex][xIndex] == player && board[yIndex][xIndex] != 0){
                 // 既に配置されていた場合は配置することができないのでNULLを返す
                 return null;
             }else if( yDisc + yIncrement == yIndex&& xDisc + xIncrement == xIndex && board[yIndex][xIndex] != opposite){
@@ -207,8 +207,16 @@ public class Board {
 
 
     public static void displayBoard(int[][] board){
-        for(int[] w: board){
-            for(int n : w){
+        for(int i = 0; i < board.length; i ++){
+            if(i == 0){
+                System.out.println("    0  1  2  3  4  5  6  7");
+            }
+
+            for(int j = 0; j < board[i].length; j++){
+                if(j == 0){
+                    System.out.print(String.format(" %d ", i));
+                }
+                int n = board[i][j];
                 if(n == WHITE){
                     System.out.print("[●]");
                 }else if(n == BLACK){
@@ -219,6 +227,7 @@ public class Board {
             }
             System.out.println();
         }
+
     }
 
     public int[][] settableDiskPositions(int player){
