@@ -127,20 +127,8 @@ public class Board {
      * @return 有効なコマが対照的に存在していればその座標を{ x, y }で返し、無効であれば nullを返す
      */
     public @Nullable int[] oppositeDiscX(int player, int xDisc, int yDisc,  boolean isRightTo){
-        int[] xArray = board[yDisc];
         int increment = isRightTo ? 1 : -1;
-        int opposite = player == WHITE ? BLACK : WHITE;
-        for( int i = xDisc; i < xArray.length && i >= 0;  i += increment){
-            if( i == xDisc && xArray[i] != 0){
-                // 既に配置されていた場合は配置することができないのでNULLを返す
-                return null;
-            }else if( i == xDisc + increment && xArray[i] != opposite){
-                return null;
-            }else if( xArray[i] == player ){
-                return new int[]{ i, yDisc };
-            }
-        }
-        return null;
+        return oppositeDiagonal(player, xDisc, yDisc, increment, 0);
     }
 
     /**
@@ -154,35 +142,7 @@ public class Board {
      */
     public @Nullable int[] oppositeDiscY(final int player, final int xDisc, final int yDisc, final boolean isUpTo){
         final int increment = isUpTo ? 1 : -1;
-        int opposite = player == WHITE ? BLACK : WHITE;
-
-        int i = yDisc;
-        if(board[i][xDisc] != 0){
-            return null;
-        }
-        i += increment;
-        while(
-                i < board.length && i >= 0
-                && board[i][xDisc] == opposite
-        ){
-            i += increment;
-        }
-        if( Math.abs(yDisc - i) < 2){
-            return null;
-        }
-        return new int[]{xDisc, i};
-        //System.out.println(String.format("xDisc:%d, yDisc:%d, increment:%d", xDisc, yDisc, increment));
-        /*for( int i = yDisc; i < board.length && i >= 0; i += increment){
-            if( i == yDisc && board[i][xDisc] != 0){
-                // 既に配置されていた場合は配置することができないのでNULLを返す
-                return null;
-            }else if( i == yDisc + increment && board[i][xDisc] != opposite){
-                return null;
-            }else if( board[i][xDisc] == player ){
-                return new int[]{ xDisc, i };
-            }
-        }
-        return null;*/
+        return oppositeDiagonal(player, xDisc, yDisc, 0, increment);
     }
 
     /**
@@ -199,10 +159,16 @@ public class Board {
 
         int xIncrement = isRightTo ? 1 : -1;
         int yIncrement = isUpTo ? -1 : 1;
+        return oppositeDiagonal(player, xDisc, yDisc, xIncrement, yIncrement);
+    }
+
+    @Nullable int[] oppositeDiagonal(final int player, final int xDisc, final int yDisc,  final int xIncrement, final int yIncrement){
+        int opposite = player == WHITE ? BLACK : WHITE;
+
         int yIndex = yDisc;
         int xIndex = xDisc;
         //System.out.println(String.format("xDisc:%d, yDisc:%d, xIncrement:%d, yIncrement:%d", xDisc, yDisc, xIncrement, yIncrement));
-        if(board[yIndex][xIndex] == player){
+        if(board[yIndex][xIndex] != 0){
             return null;
         }
         while(
@@ -212,10 +178,7 @@ public class Board {
                         && xIndex < board[yIndex].length
         ){
             //System.out.println(String.format("x:%d, y:%d", xIndex, yIndex));
-            if( yIndex == yDisc && yIndex == xDisc && board[yIndex][xIndex] == player && board[yIndex][xIndex] != 0){
-                // 既に配置されていた場合は配置することができないのでNULLを返す
-                return null;
-            }else if( yDisc + yIncrement == yIndex&& xDisc + xIncrement == xIndex && board[yIndex][xIndex] != opposite){
+            if( yDisc + yIncrement == yIndex&& xDisc + xIncrement == xIndex && board[yIndex][xIndex] != opposite){
                 return null;
             }else if( board[yIndex][xIndex] == player ){
                 return new int[]{ xIndex, yIndex };
@@ -226,6 +189,7 @@ public class Board {
 
         return null;
     }
+
 
 
     public static void displayBoard(Board b){

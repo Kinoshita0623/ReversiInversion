@@ -84,7 +84,22 @@ public class BoardTest {
         }
 
         int[] opponent2 = board.oppositeDiagonal(Board.BLACK, 3, 2, true, true);
+        int[] opponent3 = board.oppositeDiagonal(Board.BLACK, 3, 2, true, false);
+
+        int[] opponent4 = board.oppositeDiagonal(Board.BLACK, 3, 2, false, true);
+
+        int[] opponent5 = board.oppositeDiagonal(Board.BLACK, 3, 2, false, false);
         Assert.assertNull(opponent2);
+        Assert.assertNull(opponent3);
+        Assert.assertNull(opponent4);
+        Assert.assertNull(opponent5);
+
+        Assert.assertNull(board.oppositeDiscX(Board.BLACK, 2, 0, false));
+        Assert.assertNull(board.oppositeDiscX(Board.BLACK, 2, 0, true));
+        Assert.assertNull(board.oppositeDiscY(Board.BLACK, 2, 0, true));
+        Assert.assertNull(board.oppositeDiscY(Board.BLACK, 2, 0, false));
+
+
 
     }
 }
