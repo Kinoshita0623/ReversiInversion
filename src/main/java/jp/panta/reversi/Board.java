@@ -15,7 +15,7 @@ public class Board {
      * 縦軸に
      * 横横横横横横横横配置をする
      */
-    private final int[][] board;
+    final int[][] board;
 
     public Board(int size) throws IllegalArgumentException{
         if((size & 1) == 1){

@@ -17,7 +17,7 @@ public class Game {
     final ArrayList<int[]> log = new ArrayList<>();
     public final Board board = new Board();
 
-    private boolean isFinished = false;
+    int winner = 0;
 
     public Game(){
         turn = Board.BLACK;
@@ -41,8 +41,13 @@ public class Game {
         return board.settableDiskPositions(turn);
     }
 
-    public void surrender(int player){
+    public boolean isProgressGame(){
+        return board.discCount(1) + board.discCount(-1) < Math.pow(board.board.length, 2)
+                && winner == 0;
+    }
 
+    public void surrender(int player){
+        winner = player == Board.BLACK ? Board.WHITE : Board.BLACK;
     }
 
     public int getTurn() {

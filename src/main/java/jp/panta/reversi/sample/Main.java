@@ -14,7 +14,7 @@ public class Main {
 
         System.out.println("-------オセロゲーム-----------");
         Board.displayBoard(game.board);
-        while(game.board.isFill()){
+        while(game.isProgressGame()){
             String turn = game.getTurn() == Board.BLACK ? "黒" : "白";
             System.out.println("---------------------------------------------------------------");
             System.out.println("次は" + turn);
