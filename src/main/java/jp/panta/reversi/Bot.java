@@ -40,10 +40,10 @@ public class Bot extends Player{
         ));
 
         if(settablePositions[0] == null){
-            // TODO スキップを実装する
+            game.pass(game.getTurn());
             return;
         }
-        game.setDisc(getDiscType(), settablePositions[0][0], settablePositions[0][1]);
+        game.setDisc(settablePositions[0][0], settablePositions[0][1]);
 
     }
 

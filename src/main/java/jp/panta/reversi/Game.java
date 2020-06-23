@@ -16,20 +16,36 @@ public class Game {
     final ArrayList<int[]> log = new ArrayList<>();
     public final Board board;
 
+    Player whitePlayer;
+    Player blackPlayer;
+
     int winner = 0;
 
-    public Game(){
-        this(8);
+    public Game(Player black, Player white){
+        this(8, black, white);
     }
 
-    public Game(int size){
+    public Game(int size, Player black, Player white){
         turn = Board.BLACK;
         board = new Board(size);
+        blackPlayer = black;
+        whitePlayer = white;
+        if(black != null){
+            black.setDisc(Board.BLACK);
+        }
+        if(white != null){
+            white.setDisc(Board.WHITE);
+        }
         board.init();
     }
 
-    public boolean setDisc(int x, int y){
-        return setDisc(turn, x, y);
+    public void setDisc(int x, int y){
+        setDisc(turn, x, y);
+        if(turn == Board.BLACK && blackPlayer != null){
+            blackPlayer.onTurned(this);
+        }else if(turn == Board.WHITE && whitePlayer != null){
+            whitePlayer.onTurned(this);
+        }
     }
 
     public boolean setDisc(int player, int x, int y){

@@ -11,12 +11,12 @@ public class Main {
     public static void main(String[] args){
 
         Scanner sc = new Scanner(System.in);
-        Game game = new Game();
+        Bot bot = new Bot();
+
+        Game game = new Game(null, bot);
 
         System.out.println("-------オセロゲーム-----------");
         Board.displayBoard(game.board);
-        Bot bot = new Bot();
-        bot.setDisc(Board.WHITE);
 
         while(game.isProgressGame()){
             String turn = game.getTurn() == Board.BLACK ? "黒" : "白";
