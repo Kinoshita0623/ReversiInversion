@@ -1,6 +1,5 @@
 package jp.panta.reversi;
 
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
@@ -15,13 +14,22 @@ public class Game {
      * ゲームの記録がここに入る
      */
     final ArrayList<int[]> log = new ArrayList<>();
-    public final Board board = new Board();
+    public final Board board;
 
     int winner = 0;
 
     public Game(){
+        this(8);
+    }
+
+    public Game(int size){
         turn = Board.BLACK;
+        board = new Board(size);
         board.init();
+    }
+
+    public boolean setDisc(int x, int y){
+        return setDisc(turn, x, y);
     }
 
     public boolean setDisc(int player, int x, int y){
@@ -37,7 +45,7 @@ public class Game {
         return false;
     }
 
-    public @NotNull int[][] settablePositions(){
+    public int[][] settablePositions(){
         return board.settableDiskPositions(turn);
     }
 
@@ -56,5 +64,11 @@ public class Game {
 
     public int getTurn() {
         return turn;
+    }
+
+    public void pass(int player){
+        if(turn == player){
+            turn = player == Board.BLACK ? Board.WHITE : Board.BLACK;
+        }
     }
 }
